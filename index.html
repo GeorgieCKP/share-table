@@ -51,6 +51,7 @@
       background-color: #e1f5fe;
       font-weight: bold;
       color: #01579b;
+      vertical-align: middle;
     }
 
     .footer-text {
@@ -89,7 +90,7 @@
         <tbody></tbody>
         <tfoot>
           <tr>
-            <td colspan="2"></td>
+            <td colspan="2" class="text-end">รวม</td>
             <td class="text-end fw-bold" id="sumPrincipal">-</td>
             <td class="text-end fw-bold" id="sumInterest">-</td>
           </tr>
@@ -98,7 +99,7 @@
     </div>
 
     <div class="footer-text">
-      อัปเดตข้อมูลล่าสุด: <span id="lastUpdated">-</span>
+      อัปเดตข้อมูลล่าสุดเมื่อ: <span id="lastUpdated">-</span>
     </div>
   </div>
 
@@ -127,17 +128,17 @@
             <td class="text-end">${row.interest.toLocaleString()}</td>
           `;
           tbody.appendChild(tr);
-          sumPrincipal += row.principal;
-          sumInterest += row.interest;
+          sumPrincipal += Number(row.principal);
+          sumInterest += Number(row.interest);
         });
 
-        document.getElementById("sumPrincipal").innerHTML = `รวม<br>${sumPrincipal.toLocaleString()}`;
+        document.getElementById("sumPrincipal").textContent = sumPrincipal.toLocaleString();
         document.getElementById("sumInterest").textContent = sumInterest.toLocaleString();
       })
       .catch((err) => {
         document.querySelector(".container-box").insertAdjacentHTML(
           "beforeend",
-          `<div class="alert alert-danger mt-3">⚠️ โหลดข้อมูล data.json ไม่สำเร็จ</div>`
+          `<div class="alert alert-danger mt-3">⚠️ โหลดข้อมูลไม่สำเร็จ</div>`
         );
         console.error("โหลด data.json ไม่ได้:", err);
       });
