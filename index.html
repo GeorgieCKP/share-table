@@ -8,35 +8,37 @@
   <style>
     body {
       font-family: "Sarabun", sans-serif;
-      background: linear-gradient(to bottom, #e3f2fd, #ffffff);
+      background: linear-gradient(to bottom, #e1f5fe, #ffffff);
       padding: 2rem;
-      color: #333;
+      color: #01579b;
     }
 
-    .content-wrapper {
+    .container-box {
       max-width: 900px;
       margin: auto;
     }
 
-    h2 {
+    .header-box {
       text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    h2 {
       font-weight: 700;
-      color: #1976d2;
-      margin-bottom: 0.5rem;
+      color: #039be5;
+      margin-bottom: 0.25rem;
     }
 
     .subtitle {
-      text-align: center;
-      color: #607d8b;
-      margin-bottom: 2rem;
+      font-size: 1rem;
+      color: #0277bd;
     }
 
-    .card {
-      border: none;
-      border-radius: 1.5rem;
-      background: #ffffffee;
-      box-shadow: 0 10px 25px rgba(25, 118, 210, 0.15);
-      padding: 2rem;
+    .card-custom {
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(3, 169, 244, 0.2);
+      padding: 1.5rem;
     }
 
     table {
@@ -45,25 +47,20 @@
     }
 
     thead {
-      background: linear-gradient(to right, #bbdefb, #e3f2fd);
-      color: #0d47a1;
+      background-color: #b3e5fc;
+      color: #01579b;
     }
 
-    th {
-      text-align: center;
-      font-weight: 600;
+    th, td {
+      vertical-align: middle;
     }
 
-    tbody tr {
-      transition: background 0.3s ease;
-    }
-
-    tbody tr:hover {
-      background-color: #f0f8ff;
+    td {
+      background-color: #fff;
     }
 
     tfoot td {
-      background-color: #e1f5fe;
+      background-color: #e0f7fa;
       font-weight: bold;
       color: #01579b;
     }
@@ -72,37 +69,39 @@
       text-align: center;
       font-size: 0.9rem;
       margin-top: 2rem;
-      color: #607d8b;
+      color: #0277bd;
     }
 
     @media (max-width: 576px) {
       h2 { font-size: 20px; }
-      th, td { font-size: 14px; padding: 0.5rem; }
+      th, td { font-size: 14px; padding: 8px; }
     }
   </style>
 </head>
 <body>
-  <div class="content-wrapper">
-    <h2>ตารางแชร์ป้าหม้อย</h2>
-    <p class="subtitle">ระบบแสดงรายการเงินต้นและดอกเบี้ย</p>
+  <div class="container-box">
+    <div class="header-box">
+      <h2>ตารางแชร์ป้าหม้อย</h2>
+      <div class="subtitle">ระบบแสดงรายการเงินต้นและดอกเบี้ย</div>
+    </div>
 
-    <div class="card">
+    <div class="card-custom">
       <div class="table-responsive">
-        <table class="table table-hover mb-0" id="shareTable">
+        <table class="table table-bordered text-center align-middle mb-0" id="shareTable">
           <thead>
             <tr>
-              <th>ลำดับ</th>
-              <th>ชื่อผู้เล่น</th>
-              <th>เงินต้น (บาท)</th>
-              <th>ดอกเบี้ย (บาท)</th>
+              <th style="width: 10%">ลำดับ</th>
+              <th style="width: 40%">ชื่อผู้เล่น</th>
+              <th style="width: 25%">เงินต้น (บาท)</th>
+              <th style="width: 25%">ดอกเบี้ย (บาท)</th>
             </tr>
           </thead>
           <tbody></tbody>
           <tfoot>
             <tr>
               <td colspan="2" class="text-end">รวม</td>
-              <td id="sumPrincipal">-</td>
-              <td id="sumInterest">-</td>
+              <td id="sumPrincipal" class="text-end">-</td>
+              <td id="sumInterest" class="text-end">-</td>
             </tr>
           </tfoot>
         </table>
@@ -133,8 +132,8 @@
         data.forEach((row) => {
           const tr = document.createElement("tr");
           tr.innerHTML = `
-            <td class="text-center">${row.no}</td>
-            <td>${row.name}</td>
+            <td>${row.no}</td>
+            <td class="text-start">${row.name}</td>
             <td class="text-end">${row.principal.toLocaleString()}</td>
             <td class="text-end">${row.interest.toLocaleString()}</td>
           `;
@@ -147,7 +146,7 @@
         document.getElementById("sumInterest").textContent = sumInterest.toLocaleString();
       })
       .catch((err) => {
-        document.querySelector(".content-wrapper").insertAdjacentHTML(
+        document.querySelector(".container-box").insertAdjacentHTML(
           "beforeend",
           `<div class="alert alert-danger mt-3">⚠️ โหลดข้อมูลไม่สำเร็จ</div>`
         );
