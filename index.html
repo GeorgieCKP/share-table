@@ -5,28 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ตารางแชร์ป้าหม้อย</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     body {
-      font-family: "Sarabun", sans-serif;
-      background: linear-gradient(to bottom, #e1f5fe, #ffffff);
-      padding: 2rem;
-      color: #01579b;
+      font-family: 'Sarabun', sans-serif;
+      background: linear-gradient(120deg, #bbdefb, #e3f2fd);
+      color: #0d47a1;
+      padding: 2rem 1rem;
     }
 
     .container-box {
-      max-width: 900px;
+      max-width: 1000px;
       margin: auto;
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
     }
 
     .header-box {
       text-align: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
     }
 
     h2 {
       font-weight: 700;
       color: #039be5;
-      margin-bottom: 0.25rem;
     }
 
     .subtitle {
@@ -34,42 +38,34 @@
       color: #0277bd;
     }
 
-    .card-custom {
-      background-color: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 6px 20px rgba(3, 169, 244, 0.2);
-      padding: 1.5rem;
+    .table th {
+      background-color: #81d4fa;
+      color: #0d47a1;
     }
 
-    thead {
-      background-color: #b3e5fc;
-      color: #01579b;
-    }
-
-    th, td {
-      vertical-align: middle;
-    }
-
-    td {
-      background-color: #fff;
+    .table td {
+      background-color: #f9fbfd;
     }
 
     tfoot td {
-      background-color: #e0f7fa;
+      background-color: #e1f5fe;
       font-weight: bold;
       color: #01579b;
     }
 
     .footer-text {
       text-align: center;
-      font-size: 0.9rem;
       margin-top: 2rem;
+      font-size: 0.9rem;
       color: #0277bd;
     }
 
-    @media (max-width: 576px) {
-      h2 { font-size: 20px; }
-      th, td { font-size: 14px; padding: 8px; }
+    .badge-custom {
+      font-size: 0.9rem;
+      background: #bbdefb;
+      color: #0d47a1;
+      padding: 0.4em 0.8em;
+      border-radius: 10px;
     }
   </style>
 </head>
@@ -77,34 +73,32 @@
   <div class="container-box">
     <div class="header-box">
       <h2>ตารางแชร์ป้าหม้อย</h2>
-      <div class="subtitle">ระบบแสดงรายการเงินต้นและดอกเบี้ย</div>
+      <div class="subtitle">(ระบบแสดงเงินต้นและดอกเบี้ย)</div>
     </div>
 
-    <div class="card-custom">
-      <div class="table-responsive">
-        <table class="table table-bordered text-center align-middle mb-0" id="shareTable">
-          <thead>
-            <tr>
-              <th style="width: 10%">ลำดับ</th>
-              <th style="width: 40%">ชื่อผู้เล่น</th>
-              <th style="width: 25%">เงินต้น (บาท)</th>
-              <th style="width: 25%">ดอกเบี้ย (บาท)</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-          <tfoot>
-            <tr>
-              <td colspan="2"></td>
-              <td class="text-end fw-bold" id="sumPrincipal">-</td>
-              <td class="text-end fw-bold" id="sumInterest">-</td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
+    <div class="table-responsive">
+      <table class="table table-bordered text-center align-middle" id="shareTable">
+        <thead>
+          <tr>
+            <th>ลำดับ</th>
+            <th>ชื่อผู้เล่น</th>
+            <th>เงินต้น (บาท)</th>
+            <th>ดอกเบี้ย (บาท)</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2"></td>
+            <td class="text-end fw-bold" id="sumPrincipal">-</td>
+            <td class="text-end fw-bold" id="sumInterest">-</td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
 
     <div class="footer-text">
-      อัปเดตข้อมูลล่าสุดเมื่อ: <span id="lastUpdated">-</span>
+      อัปเดตข้อมูลล่าสุด: <span id="lastUpdated">-</span>
     </div>
   </div>
 
@@ -137,14 +131,13 @@
           sumInterest += row.interest;
         });
 
-        // ใส่ "รวม" ให้ตรงช่องเงินต้น
         document.getElementById("sumPrincipal").innerHTML = `รวม<br>${sumPrincipal.toLocaleString()}`;
         document.getElementById("sumInterest").textContent = sumInterest.toLocaleString();
       })
       .catch((err) => {
         document.querySelector(".container-box").insertAdjacentHTML(
           "beforeend",
-          `<div class="alert alert-danger mt-3">⚠️ โหลดข้อมูลไม่สำเร็จ</div>`
+          `<div class="alert alert-danger mt-3">⚠️ โหลดข้อมูล data.json ไม่สำเร็จ</div>`
         );
         console.error("โหลด data.json ไม่ได้:", err);
       });
