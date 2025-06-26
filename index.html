@@ -41,11 +41,6 @@
       padding: 1.5rem;
     }
 
-    table {
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
     thead {
       background-color: #b3e5fc;
       color: #01579b;
@@ -99,9 +94,9 @@
           <tbody></tbody>
           <tfoot>
             <tr>
-              <td colspan="2" class="text-end">รวม</td>
-              <td id="sumPrincipal" class="text-end">-</td>
-              <td id="sumInterest" class="text-end">-</td>
+              <td colspan="2"></td>
+              <td class="text-end fw-bold" id="sumPrincipal">-</td>
+              <td class="text-end fw-bold" id="sumInterest">-</td>
             </tr>
           </tfoot>
         </table>
@@ -142,7 +137,8 @@
           sumInterest += row.interest;
         });
 
-        document.getElementById("sumPrincipal").textContent = sumPrincipal.toLocaleString();
+        // ใส่ "รวม" ให้ตรงช่องเงินต้น
+        document.getElementById("sumPrincipal").innerHTML = `รวม<br>${sumPrincipal.toLocaleString()}`;
         document.getElementById("sumInterest").textContent = sumInterest.toLocaleString();
       })
       .catch((err) => {
